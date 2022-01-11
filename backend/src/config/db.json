@@ -1,0 +1,11 @@
+{
+    "development": {
+        "host": "192.168.1.47",
+        "port": "5432",
+        "username": "avasdb21",
+        "password": "lksysNov!11",
+        "database": "glory",
+        "dialect" : "postgres",
+        "timezone": "+09:00"
+    }
+}

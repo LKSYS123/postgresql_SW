@@ -7,6 +7,9 @@ router.post('/add/data', controller.api.addData);
 router.post('/update/data', controller.api.updateData);
 router.post('/delete/data', controller.api.deleteData);
 
+router.post('/api/addGlory', controller.api.addGlory);
+router.get('/api/glorys', controller.api.getGloryList);
+
 router.post('/api/addPost', controller.api.addPost);
 router.get('/api/posts', controller.api.getPostList);
 router.get('/api/post/:id', controller.api.getPost);
@@ -14,7 +17,6 @@ router.post('/api/updatePost', controller.api.updatePost);
 router.post('/api/deletePost', controller.api.deletePost);
 // router.post('/api/updatePost/:id', controller.api.updatePost);
 // router.post('/api/deletePost/:id', controller.api.deletePost);
-
 
 router.post('/api/register', controller.api.register);
 router.post('/api/login', controller.api.login);

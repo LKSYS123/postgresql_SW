@@ -1,10 +1,8 @@
-const path = require('path')
+const path = require('path');
 const AWS = require('aws-sdk');
 const model = require('./api/model');
 
-AWS.config.loadFromPath(
-    path.join(__dirname, 'config', 'awsConfig.json')
-);
+AWS.config.loadFromPath(path.join(__dirname, 'config', 'awsConfig.json'));
 
 module.exports = {
     needs: () => upload,
@@ -12,7 +10,7 @@ module.exports = {
         // 회원가입
         register: (req, res) => {
             const body = req.body;
-            model.api.register(body, result => {
+            model.api.register(body, (result) => {
                 if (result) {
                     res.send(true);
                     console.log('=====회원가입 컨트롤러 완료=====');
@@ -20,19 +18,19 @@ module.exports = {
                     console.log('=====회원가입 컨트롤러 실패=====');
                     return;
                 }
-            })
+            });
         },
         // 로그인
         login: (req, res) => {
             const body = req.body;
-            model.api.login(body, result => {
+            model.api.login(body, (result) => {
                 if (result[0]) {
                     res.send(result[0]);
-                    console.log('=====로그인 컨트롤러 성공=====')
+                    console.log('=====로그인 컨트롤러 성공=====');
                 } else {
                     console.log('=====로그인 컨트롤러 실패=====');
                 }
-            })
+            });
         },
 
         // 로그인 체크
@@ -41,14 +39,14 @@ module.exports = {
             for (output in req) {
                 console.log('reqreq =====> ' + output.params);
             }
-            model.api.loginCheck(req.params, result => {
+            model.api.loginCheck(req.params, (result) => {
                 if (result[0]) {
                     res.send(result[0]);
-                    console.log('=====로그인체크 컨트롤러 성공=====')
+                    console.log('=====로그인체크 컨트롤러 성공=====');
                 } else {
                     console.log('=====로그인체크 컨트롤러 실패=====');
                 }
-            })
+            });
         },
 
         // 로그아웃
@@ -61,48 +59,69 @@ module.exports = {
         },
 
         // 포스트 입력
+        addGlory: (req, res) => {
+            const body = req.body;
+            console.log('body body', body);
+            model.api.addGlory(body, (result) => {
+                if (result) {
+                    const post = JSON.stringify(body);
+                    response.header('Access-Control-Allow-Origin', '*');
+                    res.send(post);
+                }
+            });
+        },
+
+        // 포스트목록 조회
+        getGloryList: (req, res) => {
+            model.api.getGloryList((result) => {
+                return res.send(result);
+            });
+        },
+
+        // 포스트 입력
         addPost: (req, res) => {
             const body = req.body;
             console.log('body body', body);
-            model.api.addPost(body, result => {
+            model.api.addPost(body, (result) => {
                 if (result) {
                     const post = JSON.stringify(body);
+                    response.header('Access-Control-Allow-Origin', '*');
                     res.send(post);
                 }
-            })
+            });
         },
 
         // 포스트목록 조회
         getPostList: (req, res) => {
-            model.api.getPostList(result => {
-                return res.send(result)
-            })
+            model.api.getPostList((result) => {
+                return res.send(result);
+            });
         },
 
         // 포스트 조회
         getPost: (req, res) => {
-            model.api.getPost(req.params, result => {
+            model.api.getPost(req.params, (result) => {
                 if (result) {
-                    return res.send(result)
+                    return res.send(result);
                 }
-            })
+            });
         },
 
         // 포스트 수정
         updatePost: (req, res) => {
             const body = req.body;
-            model.api.updatePost(body, result => {
+            model.api.updatePost(body, (result) => {
                 if (result) {
-                    return res.send(true)
+                    return res.send(true);
                 }
             });
         },
         // 포스트 삭제
         deletePost: (req, res) => {
             const body = req.body;
-            model.api.deletePost(body, result => {
+            model.api.deletePost(body, (result) => {
                 if (result) {
-                    return res.send(true)
+                    return res.send(true);
                 }
             });
         },
@@ -118,35 +137,33 @@ module.exports = {
 
         // 예시 데이터
         getData: (req, res) => {
-            model.api.getData(data => {
-                return res.send(data)
-            })
+            model.api.getData((data) => {
+                return res.send(data);
+            });
         },
         addData: (req, res) => {
             const body = req.body;
-            model.api.addData(body, result => {
+            model.api.addData(body, (result) => {
                 if (result) {
                     res.send(true);
                 }
-            })
+            });
         },
         updateData: (req, res) => {
             const body = req.body;
-            model.api.updateData(body, result => {
+            model.api.updateData(body, (result) => {
                 if (result) {
                     res.send(true);
                 }
-            })
+            });
         },
         deleteData: (req, res) => {
             const body = req.body;
-            model.api.deleteData(body, result => {
+            model.api.deleteData(body, (result) => {
                 if (result) {
                     res.send(true);
                 }
-            })
+            });
         },
-
     },
-}
-
+};

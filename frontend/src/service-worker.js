@@ -2,7 +2,11 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst, NetworkOnly } from 'workbox-strategies';
+import {
+    StaleWhileRevalidate,
+    CacheFirst,
+    NetworkOnly,
+} from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { BackgroundSyncPlugin, Queue } from 'workbox-background-sync';
 
@@ -49,14 +53,14 @@ registerRoute(
 );
 
 registerRoute(
-    ({ request }) => request.destination === 'script' ||
-        request.destination === 'style',
+    ({ request }) =>
+        request.destination === 'script' || request.destination === 'style',
     new StaleWhileRevalidate({
         cacheName: 'static-resources',
     })
 );
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
     console.log('fettttttttttt', event.request.url);
     // if (event.request.url === 'chrome-extension://fmkadmapgofadopljbjfkapdkoienihi/build/react_devtools_backend.js') {
     //     event.waitUntil(
@@ -65,7 +69,7 @@ self.addEventListener('fetch', event => {
     //         })
     //     )
     // }
-})
+});
 
 const bgSyncPlugin = new BackgroundSyncPlugin('lksys-queue', {
     maxRetentionTime: 24 * 60, // 재시도 할 수 있는 시간 (분단위)
@@ -78,8 +82,10 @@ const bgSyncPlugin = new BackgroundSyncPlugin('lksys-queue', {
             try {
                 const response = await fetch(entry.request.clone());
                 const result = await response.json();
-                console.log('service-worker-result ======> ', JSON.stringify(result));
-
+                console.log(
+                    'service-worker-result ======> ',
+                    JSON.stringify(result)
+                );
             } catch (error) {
                 console.error('Replay failed for request', entry.request);
 
@@ -88,7 +94,7 @@ const bgSyncPlugin = new BackgroundSyncPlugin('lksys-queue', {
                 throw error;
             }
         }
-    }
+    },
 });
 
 registerRoute(
@@ -107,9 +113,9 @@ registerRoute(
             new CacheableResponsePlugin({
                 statuses: [0, 200],
             }),
-        ]
+        ],
     })
-)
+);
 
 self.addEventListener('sync', (event) => {
     console.log('===== 서비스 워커 - sync : ', event.tag);

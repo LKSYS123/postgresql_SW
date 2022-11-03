@@ -14,17 +14,36 @@ function App() {
     const [postId, setPostId] = useState('');
     const [postTitle, setPostTitle] = useState('');
     const [postBody, setPostBody] = useState('');
+    const [online, setOnline] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:4000/api/posts', {
+        if (navigator.onLine) {
+            setOnline(true);
+            console.log('onononononononon');
+        } else {
+            setOnline(false);
+            console.log('off off off off off');
+        }
+    }, [online]);
+
+    useEffect(() => {
+        console.log('aaaaaaaaaaaaa', online);
+    }, [online]);
+
+    useEffect(() => {
+        fetch('http://localhost:4000/api/glorys', {
             headers: {
                 Accept: 'application/json',
             },
+            mode: 'no-cors',
         })
             .then((response) => response.json())
             .then((data) => {
                 setBackData(data);
-                console.log(data);
+                console.log('data ===========> ' + data);
+            })
+            .catch((resp) => {
+                console.error(resp);
             });
     }, []);
 
@@ -46,16 +65,16 @@ function App() {
     params.append('body', postBody);
 
     const onSubmit = () => {
-        fetch('http://localhost:4000/api/addPost', {
+        fetch('http://localhost:4000/api/addGlory', {
             headers: {
                 Accept: 'application/json',
             },
             method: 'POST',
             body: params,
-            mode: 'cors',
+            mode: 'no-cors',
         })
             .then((request) => console.log(request))
-            .then((response) => response.json())
+            // .then((response) => response.json())
             .then((json) => console.log(json))
             .catch((err) => {
                 console.log(err);
@@ -69,7 +88,7 @@ function App() {
             },
             method: 'POST',
             body: params,
-            mode: 'cors',
+            mode: 'no-cors',
         })
             .then((request) => console.log(request))
             .then((response) => response.json())
@@ -86,7 +105,7 @@ function App() {
             },
             method: 'POST',
             body: params,
-            mode: 'cors',
+            mode: 'no-cors',
         })
             .then((request) => console.log(request))
             .then((response) => response.json())
@@ -114,7 +133,7 @@ function App() {
                         <TableBody>
                             {backData.map((data) => (
                                 <TableRow
-                                    key={data.id}
+                                    key={0}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,

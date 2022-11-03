@@ -1,10 +1,10 @@
 {
     "development": {
-        "host": "192.168.1.47",
+        "host": "avasdb21.postgres.database.azure.com",
         "port": "5432",
-        "username": "avasdb21",
-        "password": "lksysNov!11",
-        "database": "glory",
+        "username": "avasdev@avasdb21",
+        "password": "avasdevFeb!02",
+        "database": "avasdev",
         "dialect" : "postgres",
         "timezone": "+09:00"
     }
